@@ -30,10 +30,12 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@mdi/font", "npm:7.0.96"],\
             ["@vitejs/plugin-vue", "virtual:1d49bdc5852fadc8755d84749c08a435e6df0198f0090e9c1a5650797b65317e1153288364151107411a7af617e347b05c9c16044a297e0ae0bd3fabee08f69d#npm:3.2.0"],\
+            ["apexcharts", "npm:3.37.2"],\
             ["roboto-fontface", "npm:0.10.0"],\
             ["vite", "virtual:1d49bdc5852fadc8755d84749c08a435e6df0198f0090e9c1a5650797b65317e1153288364151107411a7af617e347b05c9c16044a297e0ae0bd3fabee08f69d#npm:3.2.5"],\
             ["vite-plugin-vuetify", "virtual:1d49bdc5852fadc8755d84749c08a435e6df0198f0090e9c1a5650797b65317e1153288364151107411a7af617e347b05c9c16044a297e0ae0bd3fabee08f69d#npm:1.0.2"],\
             ["vue", "npm:3.2.47"],\
+            ["vue-apexcharts", "virtual:1d49bdc5852fadc8755d84749c08a435e6df0198f0090e9c1a5650797b65317e1153288364151107411a7af617e347b05c9c16044a297e0ae0bd3fabee08f69d#npm:1.6.2"],\
             ["vuetify", "virtual:1d49bdc5852fadc8755d84749c08a435e6df0198f0090e9c1a5650797b65317e1153288364151107411a7af617e347b05c9c16044a297e0ae0bd3fabee08f69d#npm:3.1.11"],\
             ["webfontloader", "npm:1.6.28"]\
           ],\
@@ -386,6 +388,21 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["apexcharts", [\
+        ["npm:3.37.2", {\
+          "packageLocation": "./.yarn/cache/apexcharts-npm-3.37.2-a949860f86-281f876c45.zip/node_modules/apexcharts/",\
+          "packageDependencies": [\
+            ["apexcharts", "npm:3.37.2"],\
+            ["svg.draggable.js", "npm:2.2.2"],\
+            ["svg.easing.js", "npm:2.0.0"],\
+            ["svg.filter.js", "npm:2.0.2"],\
+            ["svg.pathmorphing.js", "npm:0.1.3"],\
+            ["svg.resize.js", "npm:1.4.3"],\
+            ["svg.select.js", "npm:3.0.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["aproba", [\
         ["npm:2.0.0", {\
           "packageLocation": "./.yarn/cache/aproba-npm-2.0.0-8716bcfde6-5615cadcfb.zip/node_modules/aproba/",\
@@ -572,10 +589,12 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["dtdash", "workspace:."],\
             ["@mdi/font", "npm:7.0.96"],\
             ["@vitejs/plugin-vue", "virtual:1d49bdc5852fadc8755d84749c08a435e6df0198f0090e9c1a5650797b65317e1153288364151107411a7af617e347b05c9c16044a297e0ae0bd3fabee08f69d#npm:3.2.0"],\
+            ["apexcharts", "npm:3.37.2"],\
             ["roboto-fontface", "npm:0.10.0"],\
             ["vite", "virtual:1d49bdc5852fadc8755d84749c08a435e6df0198f0090e9c1a5650797b65317e1153288364151107411a7af617e347b05c9c16044a297e0ae0bd3fabee08f69d#npm:3.2.5"],\
             ["vite-plugin-vuetify", "virtual:1d49bdc5852fadc8755d84749c08a435e6df0198f0090e9c1a5650797b65317e1153288364151107411a7af617e347b05c9c16044a297e0ae0bd3fabee08f69d#npm:1.0.2"],\
             ["vue", "npm:3.2.47"],\
+            ["vue-apexcharts", "virtual:1d49bdc5852fadc8755d84749c08a435e6df0198f0090e9c1a5650797b65317e1153288364151107411a7af617e347b05c9c16044a297e0ae0bd3fabee08f69d#npm:1.6.2"],\
             ["vuetify", "virtual:1d49bdc5852fadc8755d84749c08a435e6df0198f0090e9c1a5650797b65317e1153288364151107411a7af617e347b05c9c16044a297e0ae0bd3fabee08f69d#npm:3.1.11"],\
             ["webfontloader", "npm:1.6.28"]\
           ],\
@@ -1738,6 +1757,84 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["svg.draggable.js", [\
+        ["npm:2.2.2", {\
+          "packageLocation": "./.yarn/cache/svg.draggable.js-npm-2.2.2-91cd7475f3-b9068975d7.zip/node_modules/svg.draggable.js/",\
+          "packageDependencies": [\
+            ["svg.draggable.js", "npm:2.2.2"],\
+            ["svg.js", "npm:2.7.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["svg.easing.js", [\
+        ["npm:2.0.0", {\
+          "packageLocation": "./.yarn/cache/svg.easing.js-npm-2.0.0-0c84ce8158-0f7df78333.zip/node_modules/svg.easing.js/",\
+          "packageDependencies": [\
+            ["svg.easing.js", "npm:2.0.0"],\
+            ["svg.js", "npm:2.7.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["svg.filter.js", [\
+        ["npm:2.0.2", {\
+          "packageLocation": "./.yarn/cache/svg.filter.js-npm-2.0.2-f65ff6d47e-f0e780bfe3.zip/node_modules/svg.filter.js/",\
+          "packageDependencies": [\
+            ["svg.filter.js", "npm:2.0.2"],\
+            ["svg.js", "npm:2.7.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["svg.js", [\
+        ["npm:2.7.1", {\
+          "packageLocation": "./.yarn/cache/svg.js-npm-2.7.1-c232ccf7aa-945bfc9623.zip/node_modules/svg.js/",\
+          "packageDependencies": [\
+            ["svg.js", "npm:2.7.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["svg.pathmorphing.js", [\
+        ["npm:0.1.3", {\
+          "packageLocation": "./.yarn/cache/svg.pathmorphing.js-npm-0.1.3-83b910d5a4-bcbe1ccea9.zip/node_modules/svg.pathmorphing.js/",\
+          "packageDependencies": [\
+            ["svg.pathmorphing.js", "npm:0.1.3"],\
+            ["svg.js", "npm:2.7.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["svg.resize.js", [\
+        ["npm:1.4.3", {\
+          "packageLocation": "./.yarn/cache/svg.resize.js-npm-1.4.3-9e6b42a70f-8f4116f442.zip/node_modules/svg.resize.js/",\
+          "packageDependencies": [\
+            ["svg.resize.js", "npm:1.4.3"],\
+            ["svg.js", "npm:2.7.1"],\
+            ["svg.select.js", "npm:2.1.2"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["svg.select.js", [\
+        ["npm:2.1.2", {\
+          "packageLocation": "./.yarn/cache/svg.select.js-npm-2.1.2-d8be268fcb-1dbbb44d16.zip/node_modules/svg.select.js/",\
+          "packageDependencies": [\
+            ["svg.select.js", "npm:2.1.2"],\
+            ["svg.js", "npm:2.7.1"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["npm:3.0.1", {\
+          "packageLocation": "./.yarn/cache/svg.select.js-npm-3.0.1-9baa0ca5b5-0ce3bda86f.zip/node_modules/svg.select.js/",\
+          "packageDependencies": [\
+            ["svg.select.js", "npm:3.0.1"],\
+            ["svg.js", "npm:2.7.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["tar", [\
         ["npm:6.1.13", {\
           "packageLocation": "./.yarn/cache/tar-npm-6.1.13-3234e72781-8a278bed12.zip/node_modules/tar/",\
@@ -1884,6 +1981,28 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@vue/runtime-dom", "npm:3.2.47"],\
             ["@vue/server-renderer", "virtual:487db916e160a571ff50687ed972004ec0078aa76b7fedf7bdabfd607dfed3ba7b2d1f51e99387f885501b4dbb11471c0ce20d647adb7ae38656bbc259642ae8#npm:3.2.47"],\
             ["@vue/shared", "npm:3.2.47"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["vue-apexcharts", [\
+        ["npm:1.6.2", {\
+          "packageLocation": "./.yarn/cache/vue-apexcharts-npm-1.6.2-e06401228e-20eac6d523.zip/node_modules/vue-apexcharts/",\
+          "packageDependencies": [\
+            ["vue-apexcharts", "npm:1.6.2"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:1d49bdc5852fadc8755d84749c08a435e6df0198f0090e9c1a5650797b65317e1153288364151107411a7af617e347b05c9c16044a297e0ae0bd3fabee08f69d#npm:1.6.2", {\
+          "packageLocation": "./.yarn/__virtual__/vue-apexcharts-virtual-d509a7f21e/0/cache/vue-apexcharts-npm-1.6.2-e06401228e-20eac6d523.zip/node_modules/vue-apexcharts/",\
+          "packageDependencies": [\
+            ["vue-apexcharts", "virtual:1d49bdc5852fadc8755d84749c08a435e6df0198f0090e9c1a5650797b65317e1153288364151107411a7af617e347b05c9c16044a297e0ae0bd3fabee08f69d#npm:1.6.2"],\
+            ["@types/apexcharts", null],\
+            ["apexcharts", "npm:3.37.2"]\
+          ],\
+          "packagePeers": [\
+            "@types/apexcharts",\
+            "apexcharts"\
           ],\
           "linkType": "HARD"\
         }]\
