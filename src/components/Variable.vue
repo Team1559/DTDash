@@ -1,7 +1,5 @@
 <template>
-  <td 
-    :style="indentStyle"
-    :id="path">
+  <td :style="indentStyle" :id="path">
     <v-icon v-if="selected" icon="mdi-check" />
     {{ name }}
   </td>
@@ -19,7 +17,7 @@ export default {
   }),
   computed: {
     indentStyle() {
-      return 'padding-left: ' + (this.indent - 1) * 15 + "px;"
+      return 'padding-left: ' + (this.indent) * 15 + "px;"
     },
   },
   methods: {

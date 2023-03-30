@@ -35,7 +35,7 @@ export class TopicTree {
         this.children.push(child)
     }
     add(name) {
-        this.addPath(name.split("/"))
+        this.addPath(name.split("/").slice(1))
     }
     addPath(path) {
         if (!path.length) {
@@ -102,7 +102,7 @@ export class TopicTree {
         if (!into) {
             into = []
         }
-        into.push([indent, path, this.name, this.hasChildren()])
+        into.push([indent, path, this.name || "/", this.hasChildren()])
         for (const child of this.children) {
             child.flatten(indent + 1, path, into)
         }

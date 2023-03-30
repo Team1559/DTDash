@@ -27,6 +27,10 @@ export default {
         }))
       },
       options: {
+        colors: {
+          enabled: true,
+          forceOverride: true
+        },
         elements: {
           line: {
           },
@@ -59,10 +63,13 @@ export default {
                       data: data,
                       parsing: false,
                     })
+                    chart.buildOrUpdateControllers()
                   }
                 })
               }
             },
+          },
+          y: {
           }
         },
         plugins: {

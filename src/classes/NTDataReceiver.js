@@ -11,6 +11,8 @@ export class NTDataReceiver {
     this.updateQueues = new Map()
     this.connected = false
     this.topicTreeChangeHandlers = []
+    this.connectionStateHandlers = []
+    this.startTimeStamp = null
 
     this.ntClient = new NT4_Client(
       "localhost", // TODO make this the robot
@@ -37,6 +39,9 @@ export class NTDataReceiver {
     this.topicTree.remove(name)
   }
   valueUpdateHandler(topic, timestamp_us, value) {
+    if (!this.startTimeStamp) {
+      this.startTimeStamp = Date.now() - timestamp_us / 1000.0
+    }
     const name = topic.name
     if (!this.isTopicWanted(name)) {
       return
@@ -46,13 +51,19 @@ export class NTDataReceiver {
     }
     var queue = this.updateQueues.get(name)
     // store data in object format so chart.js doesn't have to parse
-    queue.push({ x: timestamp_us / 1000.0, y: value })
+    queue.push({ x: this.startTimeStamp + timestamp_us / 1000.0, y: value })
+  }
+  handleConnectionStateChanged(handler) {
+    handler(this.connected)
+    this.connectionStateHandlers.push(handler)
   }
   onConnect() {
     this.connected = true
+    this.connectionStateHandlers.forEach(f => f(this.connected))
   }
   onDisconnect() {
     this.connected = false
+    this.connectionStateHandlers.forEach(f => f(this.connected))
   }
   isConnected() {
     return this.connected
@@ -74,6 +85,7 @@ export class NTDataReceiver {
     return data
   }
   handleTopicTreeChanged(handler) {
+    handler(this.topicTree)
     this.topicTreeChangeHandlers.push(handler)
   }
 }
