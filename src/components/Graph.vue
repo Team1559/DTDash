@@ -7,6 +7,8 @@
 
 <script setup>
 import { Chart } from 'chart.js'
+import { scaleOrdinal } from 'd3-scale'
+import { schemeCategory10 } from 'd3-scale-chromatic'
 import { NTDataReceiver } from '../classes/NTDataReceiver.js'
 </script>
 
@@ -20,49 +22,55 @@ export default {
     this.chart = new Chart(this.$refs.chart, {
       type: 'line',
       data: {
-        datasets: this.$props.topics.map(topic => ({
-          label: topic,
-          data: [],
-          parsing: false,
-        }))
+        datasets: []
       },
       options: {
         colors: {
-          enabled: true,
-          forceOverride: true
+          enabled: false,
         },
         elements: {
           line: {
+            borderWidth: 1,
+          },
+          point: {
+            pointStyle: false,
           },
         },
         crosshair: {
         },
+        animation: false,
+        spanGaps: true,
         scales: {
           x: {
             type: 'realtime',
+            ticks: {
+              minRotation: 0,
+              maxRotation: 0,
+              sampleSize: 3,
+            },
+            grid: {
+              color: '#333',
+            },
             realtime: {
               duration: 3 * 60 * 1000,
               delay: 100,
               ttl: 15 * 60 * 1000,
               refresh: 100,
+              frameRate: 10,
               onRefresh: chart => {
                 // query your data source and get the array of {x: timestamp, y: value} objects
                 this.topics.forEach((topic, index) => {
                   const data = NTDataReceiver.instance.getQueuedDataForTopic(topic)
                   var done = false
                   for (const dataset of chart.data.datasets) {
-                    if (dataset.label === topic) {
+                    if (dataset.label === this.topicDisplayString(topic)) {
                       dataset.data.push(...data)
                       done = true
                       break
                     }
                   }
                   if (!done) {
-                    chart.data.datasets.push({
-                      label: topic,
-                      data: data,
-                      parsing: false,
-                    })
+                    chart.data.datasets.push(this.datasetForTopic(topic, chart.data.datasets.length, data))
                     chart.buildOrUpdateControllers()
                   }
                 })
@@ -70,6 +78,9 @@ export default {
             },
           },
           y: {
+            grid: {
+              color: '#666',
+            },
           }
         },
         plugins: {
@@ -120,10 +131,23 @@ export default {
   },
   data: () => ({
     chart: null,
+    colors: scaleOrdinal(schemeCategory10),
   }),
   computed: {
   },
   methods: {
+    topicDisplayString(topic) {
+      return topic.replace("/SmartDashboard/", "")
+    },
+    datasetForTopic(topic, colorIndex, data) {
+      return {
+        label: this.topicDisplayString(topic),
+        data: data || [],
+        parsing: false,
+        normalized: true,
+        borderColor: this.colors(colorIndex || 0),
+      }
+    }
   }
 }
 </script>

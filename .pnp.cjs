@@ -35,6 +35,9 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["chartjs-adapter-luxon", "virtual:1d49bdc5852fadc8755d84749c08a435e6df0198f0090e9c1a5650797b65317e1153288364151107411a7af617e347b05c9c16044a297e0ae0bd3fabee08f69d#npm:1.3.1"],\
             ["chartjs-plugin-streaming", "virtual:1d49bdc5852fadc8755d84749c08a435e6df0198f0090e9c1a5650797b65317e1153288364151107411a7af617e347b05c9c16044a297e0ae0bd3fabee08f69d#npm:2.0.0"],\
             ["chartjs-plugin-zoom", "virtual:1d49bdc5852fadc8755d84749c08a435e6df0198f0090e9c1a5650797b65317e1153288364151107411a7af617e347b05c9c16044a297e0ae0bd3fabee08f69d#npm:2.0.1"],\
+            ["d3-interpolate", "npm:3.0.1"],\
+            ["d3-scale", "npm:4.0.2"],\
+            ["d3-scale-chromatic", "npm:3.0.0"],\
             ["font-awesome", "npm:4.7.0"],\
             ["luxon", "npm:3.3.0"],\
             ["roboto-fontface", "npm:0.10.0"],\
@@ -685,6 +688,89 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["d3-array", [\
+        ["npm:3.2.3", {\
+          "packageLocation": "./.yarn/cache/d3-array-npm-3.2.3-4449918821-41d6a4989b.zip/node_modules/d3-array/",\
+          "packageDependencies": [\
+            ["d3-array", "npm:3.2.3"],\
+            ["internmap", "npm:2.0.3"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["d3-color", [\
+        ["npm:3.1.0", {\
+          "packageLocation": "./.yarn/cache/d3-color-npm-3.1.0-fc73fe3b15-4931fbfda5.zip/node_modules/d3-color/",\
+          "packageDependencies": [\
+            ["d3-color", "npm:3.1.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["d3-format", [\
+        ["npm:3.1.0", {\
+          "packageLocation": "./.yarn/cache/d3-format-npm-3.1.0-dfc19924ca-f345ec3b8a.zip/node_modules/d3-format/",\
+          "packageDependencies": [\
+            ["d3-format", "npm:3.1.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["d3-interpolate", [\
+        ["npm:3.0.1", {\
+          "packageLocation": "./.yarn/cache/d3-interpolate-npm-3.0.1-77ddca7977-a42ba314e2.zip/node_modules/d3-interpolate/",\
+          "packageDependencies": [\
+            ["d3-interpolate", "npm:3.0.1"],\
+            ["d3-color", "npm:3.1.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["d3-scale", [\
+        ["npm:4.0.2", {\
+          "packageLocation": "./.yarn/cache/d3-scale-npm-4.0.2-d17a53447b-a9c770d283.zip/node_modules/d3-scale/",\
+          "packageDependencies": [\
+            ["d3-scale", "npm:4.0.2"],\
+            ["d3-array", "npm:3.2.3"],\
+            ["d3-format", "npm:3.1.0"],\
+            ["d3-interpolate", "npm:3.0.1"],\
+            ["d3-time", "npm:3.1.0"],\
+            ["d3-time-format", "npm:4.1.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["d3-scale-chromatic", [\
+        ["npm:3.0.0", {\
+          "packageLocation": "./.yarn/cache/d3-scale-chromatic-npm-3.0.0-ca3b48a3cb-a8ce4cb026.zip/node_modules/d3-scale-chromatic/",\
+          "packageDependencies": [\
+            ["d3-scale-chromatic", "npm:3.0.0"],\
+            ["d3-color", "npm:3.1.0"],\
+            ["d3-interpolate", "npm:3.0.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["d3-time", [\
+        ["npm:3.1.0", {\
+          "packageLocation": "./.yarn/cache/d3-time-npm-3.1.0-fb068fd1c9-613b435352.zip/node_modules/d3-time/",\
+          "packageDependencies": [\
+            ["d3-time", "npm:3.1.0"],\
+            ["d3-array", "npm:3.2.3"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["d3-time-format", [\
+        ["npm:4.1.0", {\
+          "packageLocation": "./.yarn/cache/d3-time-format-npm-4.1.0-7f352c4634-7342bce283.zip/node_modules/d3-time-format/",\
+          "packageDependencies": [\
+            ["d3-time-format", "npm:4.1.0"],\
+            ["d3-time", "npm:3.1.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["debug", [\
         ["npm:4.3.4", {\
           "packageLocation": "./.yarn/cache/debug-npm-4.3.4-4513954577-3dbad3f94e.zip/node_modules/debug/",\
@@ -738,6 +824,9 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["chartjs-adapter-luxon", "virtual:1d49bdc5852fadc8755d84749c08a435e6df0198f0090e9c1a5650797b65317e1153288364151107411a7af617e347b05c9c16044a297e0ae0bd3fabee08f69d#npm:1.3.1"],\
             ["chartjs-plugin-streaming", "virtual:1d49bdc5852fadc8755d84749c08a435e6df0198f0090e9c1a5650797b65317e1153288364151107411a7af617e347b05c9c16044a297e0ae0bd3fabee08f69d#npm:2.0.0"],\
             ["chartjs-plugin-zoom", "virtual:1d49bdc5852fadc8755d84749c08a435e6df0198f0090e9c1a5650797b65317e1153288364151107411a7af617e347b05c9c16044a297e0ae0bd3fabee08f69d#npm:2.0.1"],\
+            ["d3-interpolate", "npm:3.0.1"],\
+            ["d3-scale", "npm:4.0.2"],\
+            ["d3-scale-chromatic", "npm:3.0.0"],\
             ["font-awesome", "npm:4.7.0"],\
             ["luxon", "npm:3.3.0"],\
             ["roboto-fontface", "npm:0.10.0"],\
@@ -1284,6 +1373,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/inherits-npm-2.0.4-c66b3957a0-4a48a73384.zip/node_modules/inherits/",\
           "packageDependencies": [\
             ["inherits", "npm:2.0.4"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["internmap", [\
+        ["npm:2.0.3", {\
+          "packageLocation": "./.yarn/cache/internmap-npm-2.0.3-d74f5c9998-7ca41ec6ab.zip/node_modules/internmap/",\
+          "packageDependencies": [\
+            ["internmap", "npm:2.0.3"]\
           ],\
           "linkType": "HARD"\
         }]\
