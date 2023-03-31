@@ -1,6 +1,8 @@
 <template>
+  <v-toolbar>
+  </v-toolbar>
   <div>
-    <canvas ref="chart">
+    <canvas height="600px" style="height: 600px;" ref="chart">
     </canvas>
   </div>
 </template>
@@ -13,6 +15,14 @@ import { NTDataReceiver } from '../classes/NTDataReceiver.js'
 </script>
 
 <script>
+const frameRate = 10
+
+function minutesToMs(n) {
+  return n * 60 * 1000
+}
+const windowTime = minutesToMs(3)
+const ttl = minutesToMs(15)
+
 export default {
   name: 'Graph',
   props: {
@@ -47,16 +57,17 @@ export default {
               minRotation: 0,
               maxRotation: 0,
               sampleSize: 3,
+              color: '#eee',
             },
             grid: {
-              color: '#333',
+              color: '#444',
             },
             realtime: {
-              duration: 3 * 60 * 1000,
-              delay: 100,
-              ttl: 15 * 60 * 1000,
-              refresh: 100,
-              frameRate: 10,
+              duration: windowTime,
+              delay: 1000 / frameRate,
+              ttl: ttl,
+              refresh: 1000 / frameRate,
+              frameRate: frameRate,
               onRefresh: chart => {
                 // query your data source and get the array of {x: timestamp, y: value} objects
                 this.topics.forEach((topic, index) => {
@@ -80,6 +91,9 @@ export default {
           y: {
             grid: {
               color: '#666',
+            },
+            ticks: {
+              color: '#eee',
             },
           }
         },
@@ -105,23 +119,25 @@ export default {
           zoom: {
             pan: {
               enabled: true,
-              mode: 'x'
+              mode: 'x',
             },
             zoom: {
+              enabled: false,
+              mode: 'x',
+              scaleMode: 'xy',
               pinch: {
                 enabled: true
               },
               wheel: {
                 enabled: true
               },
-              mode: 'x'
             },
             limits: {
               x: {
                 minDelay: null,
                 maxDelay: null,
-                minDuration: null,
-                maxDuration: null
+                minDuration: windowTime / 10,
+                maxDuration: ttl,
               }
             }
           },

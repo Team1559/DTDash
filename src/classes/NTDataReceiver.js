@@ -15,7 +15,8 @@ export class NTDataReceiver {
     this.startTimeStamp = null
 
     this.ntClient = new NT4_Client(
-      "localhost", // TODO make this the robot
+      "localhost",
+      // "10.15.59.2",
       this.topicAnnounceHandler.bind(this),
       this.topicUnannounceHandler.bind(this),
       this.valueUpdateHandler.bind(this),
