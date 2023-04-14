@@ -22,6 +22,8 @@
 
       <v-main style="min-height: 100dvh; ">
         <v-card v-if="haveSelection()">
+          <v-toolbar>
+          </v-toolbar>
           <Graph :topics="Array.from(selectedTopics)">
           </Graph>
         </v-card>
