@@ -68,8 +68,13 @@ export default {
               frameRate: frameRate,
               onRefresh: chart => {
                 // query your data source and get the array of {x: timestamp, y: value} objects
+                let updatedTimestamp = 0
                 this.topics.forEach((topic, index) => {
-                  const data = NTDataReceiver.instance.getQueuedDataForTopic(topic)
+                  const lastUpdate = this.lastUpdateByTopic.get(topic) || 0
+                  const data = NTDataReceiver.instance.getDataSince(topic, lastUpdate)
+                  if (data.length > 0) {
+                    this.lastUpdateByTopic.set(topic, data.at(-1).x)
+                  }
                   var done = false
                   for (const dataset of chart.data.datasets) {
                     if (dataset.label === this.topicDisplayString(topic)) {
@@ -145,6 +150,7 @@ export default {
   },
   data: () => ({
     chart: null,
+    lastUpdateByTopic: new Map(),
     colors: scaleOrdinal(schemeCategory10),
   }),
   computed: {

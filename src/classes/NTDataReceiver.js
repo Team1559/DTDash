@@ -6,9 +6,9 @@ export class NTDataReceiver {
 
   constructor(keyPrefix) {
     this.keyPrefix = keyPrefix
-    this.allTopics = new Map()
+    this.topicsByName = new Map()
     this.topicTree = new TopicTree("")
-    this.updateQueues = new Map()
+    this.dataByTopic = new Map()
     this.connected = false
     this.topicTreeChangeHandlers = []
     this.connectionStateHandlers = []
@@ -47,10 +47,10 @@ export class NTDataReceiver {
     if (!this.isTopicWanted(name)) {
       return
     }
-    if (!this.allTopics.get(name)) {
+    if (!this.topicsByName.get(name)) {
       this.addTopic(topic)
     }
-    var queue = this.updateQueues.get(name)
+    var queue = this.dataByTopic.get(name)
     // store data in object format so chart.js doesn't have to parse
     queue.push({ x: this.startTimeStamp + timestamp_us / 1000.0, y: value })
   }
@@ -74,16 +74,39 @@ export class NTDataReceiver {
   }
   addTopic(topic) {
     const name = topic.name
-    this.updateQueues.set(name, [])
-    this.allTopics.set(name, topic)
+    this.dataByTopic.set(name, [])
+    this.topicsByName.set(name, topic)
     this.topicTree.add(name)
     this.topicTree.sort()
     this.topicTreeChangeHandlers.forEach(f => f(this.topicTree))
   }
-  getQueuedDataForTopic(name) {
-    const data = this.updateQueues.get(name)
-    this.updateQueues.set(name, [])
-    return data
+  getIndexAfterTimestamp(data, ts) {
+    let low = 0;
+    let high = data.length - 1
+
+    while (low <= high) {
+      const mid = Math.floor((low + high) / 2)
+      const midTime = data[mid].x
+
+      if (midTime < ts)
+        low = mid + 1
+      else if (midTime > ts)
+        high = mid - 1
+      else
+        return mid + 1 // element after the one we want
+    }
+    return low
+  }
+  getDataForTopic(name) {
+    return this.dataByTopic.get(name)
+  }
+  getDataSince(name, since) {
+    const data = this.dataByTopic.get(name)
+    const startIndex = this.getIndexAfterTimestamp(data, since)
+    if (startIndex >= data.length) {
+      return []
+    }
+    return data.slice(startIndex)
   }
   handleTopicTreeChanged(handler) {
     handler(this.topicTree)
