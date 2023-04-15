@@ -12,14 +12,16 @@
     <Graph v-if="isGraph" :topics="topics">
     </Graph>
     <div v-if="isText">
-      <layout v-for="topic in this.topics" :key="topic">
-        <div class="label">
-          {{ topicDisplayString(topic) }}
-        </div>
-        <div class="value" :style="textStyle">
-          {{ getValue(topic) }}
-        </div>
-      </layout>
+      <table density="compact">
+        <tr v-for="topic in this.topics" :key="topic">
+          <td class="label">
+            {{ topicDisplayString(topic) }}
+          </td>
+          <td class="value" :style="textStyle">
+            {{ getValue(topic) }}
+          </td>
+        </tr>
+      </table>
     </div>
   </v-card>
 </template>
@@ -63,6 +65,12 @@ export default {
       const value = this.currentValues.get(topic)
       if (Number.isFinite(value)) {
         return value.toPrecision(3)
+        // if (value < 0) {
+        //   return value.toPrecision(3)
+        // }
+        // else {
+        //   return "&nbsp;" + value.toPrecision(3)
+        // }
       }
       return value
     },
@@ -98,15 +106,13 @@ export default {
 .label {
   font-family: "monospace";
   font-size: 12px;
-  text-align: center;
   color: gray;
-  padding-top: 10px;
+  padding-right: 20px;
 }
 
 .value {
   font-family: "monospace";
   font-size: 24px;
-  text-align: center;
   color: red;
 }
 </style>
