@@ -1,6 +1,10 @@
 <template>
   <div>
-    <canvas height="600px" style="height: 600px;" ref="chart">
+    <canvas
+      height="600px"
+      style="height: 600px;"
+      ref="chart"
+    >
     </canvas>
   </div>
 </template>
@@ -166,7 +170,7 @@ export default {
             },
           },
         }
-      });
+      })
     },
     datasetForTopic(topic, colorIndex, data) {
       return {

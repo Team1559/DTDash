@@ -1,6 +1,12 @@
 <template>
-  <td :style="indentStyle" :id="path">
-    <v-icon v-if="selected" icon="mdi-check" />
+  <td
+    :style="indentStyle"
+    :id="path"
+  >
+    <v-icon
+      v-if="selected"
+      icon="mdi-check"
+    />
     {{ name }}
   </td>
 </template>

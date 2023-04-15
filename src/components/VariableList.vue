@@ -1,8 +1,23 @@
 <template>
-  <tr v-if="tree" v-for="[indent, path, name, hasChildren] in tree" class="variable-table-row">
-    <Variable v-if="hasChildren" :name="name" :path="path" :indent="indent" />
-    <Variable v-else @click="clickTopic" :name="name" :path="path" :indent="indent"
-      :selected="this.selectedTopics.has(path)" />
+  <tr
+    v-if="tree"
+    v-for="[indent, path, name, hasChildren] in tree"
+    class="variable-table-row"
+  >
+    <Variable
+      v-if="hasChildren"
+      :name="name"
+      :path="path"
+      :indent="indent"
+    />
+    <Variable
+      v-else
+      @click="clickTopic"
+      :name="name"
+      :path="path"
+      :indent="indent"
+      :selected="this.selectedTopics.has(path)"
+    />
   </tr>
 </template>
 
@@ -23,10 +38,10 @@ export default {
   },
   methods: {
     getSelectedTopics() {
-      return this.selectedTopics;
+      return this.selectedTopics
     },
     clickTopic(e) {
-      const name = e.target.id;
+      const name = e.target.id
       if (this.selectedTopics.has(name)) {
         this.selectedTopics.delete(name)
       }

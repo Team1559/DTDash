@@ -3,27 +3,51 @@
     <v-layout>
       <v-app-bar>
         <v-app-bar-nav-icon @click.stop="showNav = !showNav"></v-app-bar-nav-icon>
-        <v-icon v-if="connected" icon="mdi-wifi" color="green" />
-        <v-icon v-else icon="mdi-wifi-off" color="red" />
+        <v-icon
+          v-if="connected"
+          icon="mdi-wifi"
+          color="green"
+        />
+        <v-icon
+          v-else
+          icon="mdi-wifi-off"
+          color="red"
+        />
         <v-app-bar-title>DT Dashboard</v-app-bar-title>
       </v-app-bar>
 
-      <v-banner v-if="!connected" color="red" icon="mdi-wifi-off" lines="one">
+      <v-banner
+        v-if="!connected"
+        color="red"
+        icon="mdi-wifi-off"
+        lines="one"
+      >
         <v-banner-text>
           Robot disconnected
         </v-banner-text>
       </v-banner>
 
-      <v-navigation-drawer floating title="Variables" app v-model="showNav" height="100%">
+      <v-navigation-drawer
+        floating
+        title="Variables"
+        app
+        v-model="showNav"
+        height="100%"
+      >
         <table class="mono">
-          <VariableList :tree="topicTree" :onSelectTopics="onSelectTopics" />
+          <VariableList
+            :tree="topicTree"
+            :onSelectTopics="onSelectTopics"
+          />
         </table>
       </v-navigation-drawer>
 
       <v-main style="min-height: 100dvh; ">
         <v-card v-if="haveSelection()">
-          <Add :topics="Array.from(selectedTopics)">
-          </Add>
+          <Editor
+            :topics="Array.from(selectedTopics)"
+            @close-editor="clearSelection"
+          />
         </v-card>
       </v-main>
     </v-layout>
@@ -34,7 +58,7 @@
 import { NTDataReceiver } from '../classes/NTDataReceiver.js'
 import VariableList from '@/components/VariableList.vue'
 import Graph from '@/components/Graph.vue'
-import Add from '@/components/Add.vue'
+import Editor from '@/components/Editor.vue'
 </script>
 
 <script>
@@ -64,13 +88,14 @@ export default {
     },
     haveSelection() {
       return this.selectedTopics.size !== 0
+    },
+    clearSelection() {
+      this.selectedTopics = new Set()
     }
   },
-};
+}
 </script>
-<style>
-.mono {
+<style>.mono {
   font-family: "monospace";
   font-size: 12px;
-}
-</style>
+}</style>
