@@ -22,10 +22,8 @@
 
       <v-main style="min-height: 100dvh; ">
         <v-card v-if="haveSelection()">
-          <v-toolbar>
-          </v-toolbar>
-          <Graph :topics="Array.from(selectedTopics)">
-          </Graph>
+          <Add :topics="Array.from(selectedTopics)">
+          </Add>
         </v-card>
       </v-main>
     </v-layout>
@@ -36,6 +34,7 @@
 import { NTDataReceiver } from '../classes/NTDataReceiver.js'
 import VariableList from '@/components/VariableList.vue'
 import Graph from '@/components/Graph.vue'
+import Add from '@/components/Add.vue'
 </script>
 
 <script>
