@@ -2,16 +2,17 @@
   <v-card>
     <v-toolbar>
       <v-select
+        dense
         label="Show as"
         :items="VisType.All"
-        v-model="visType"
+        v-model="spec.visType"
         style="max-width: 200px"
-      >
-      </v-select>
+      />
       <v-select
+        dense
         label="Size"
-        :items="AllSizes()"
-        v-model="size"
+        :items="Size.AllSizes()"
+        v-model="spec.size"
         item-title="displayName"
         item-value="dimensions"
         return-object
@@ -58,10 +59,11 @@
 
 <script setup>
 import Graph from '@/components/Graph.vue'
+import { NTDataReceiver } from '@/classes/NTDataReceiver.js'
+import { topicDisplayString } from '@/classes/Format.js'
 import VisType from '@/classes/VisType.js'
-import { NTDataReceiver } from '../classes/NTDataReceiver.js'
-import { topicDisplayString } from '../classes/Format.js'
-import { AllSizes } from '@/classes/Size'
+import Size from '@/classes/Size.js'
+import PanelSpec from '@/classes/PanelSpec'
 </script>
 
 <script>
@@ -72,9 +74,7 @@ export default {
   },
   emits: ['close-editor'],
   data: () => ({
-    size: "2x2",
-    color: "red",
-    visType: VisType.Text,
+    spec: new PanelSpec(),
     currentValues: new Map(),
   }),
   created() {
@@ -82,13 +82,13 @@ export default {
   },
   computed: {
     isGraph() {
-      return this.visType === VisType.Graph
+      return this.spec.visType === VisType.Graph
     },
     isText() {
-      return this.visType === VisType.Text
+      return this.spec.visType === VisType.Text
     },
     textStyle() {
-      return "color: " + this.color
+      return "color: " + this.spec.colors[0]
     }
   },
   methods: {
@@ -96,16 +96,12 @@ export default {
       const value = this.currentValues.get(topic)
       if (Number.isFinite(value)) {
         return value.toPrecision(3)
-        // if (value < 0) {
-        //   return value.toPrecision(3)
-        // }
-        // else {
-        //   return "&nbsp;" + value.toPrecision(3)
-        // }
       }
       return value
     },
     updateValues() {
+      // Update current value for each topic.
+      // Used by text and gauges.
       const ntReceiver = NTDataReceiver.instance
       this.topics.forEach(topic => {
         const values = ntReceiver.getDataForTopic(topic)
@@ -133,15 +129,16 @@ export default {
   },
 }
 </script>
-<style>.label {
+<style>
+.label {
   font-family: "monospace";
   font-size: 12px;
-  color: gray;
+  color: 'white';
   padding-right: 20px;
 }
 
 .value {
   font-family: "monospace";
   font-size: 24px;
-  color: red;
-}</style>
+}
+</style>

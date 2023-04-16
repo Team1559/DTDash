@@ -2,7 +2,11 @@
   <v-card>
     <v-layout>
       <v-app-bar>
-        <v-app-bar-nav-icon @click.stop="showNav = !showNav"></v-app-bar-nav-icon>
+        <v-app-bar-nav-icon
+          icon="mdi-plus-circle"
+          color="blue"
+          @click.stop="showNav = !showNav"
+        ></v-app-bar-nav-icon>
         <v-icon
           v-if="connected"
           icon="mdi-wifi"
@@ -90,12 +94,14 @@ export default {
       return this.selectedTopics.size !== 0
     },
     clearSelection() {
-      this.selectedTopics = new Set()
+      this.selectedTopics.clear()
     }
   },
 }
 </script>
-<style>.mono {
+<style>
+.mono {
   font-family: "monospace";
   font-size: 12px;
-}</style>
+}
+</style>
