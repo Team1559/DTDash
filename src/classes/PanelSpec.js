@@ -6,6 +6,7 @@ export default class PanelSpec {
         this.topics = []
         this.visType = VisType.Text
         this.size = new Size(2, 2)
+        this.position = null
         this.colors = ['red']
     }
 }

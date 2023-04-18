@@ -27,6 +27,12 @@ const windowTime = minutesToMs(3)
 const ttl = minutesToMs(15)
 
 export default {
+  // This is a weird Vue component. Normally, Vue components re-render
+  // to create new (virtual) DOM when props or data change. In this
+  // case, the DOM remains unchanged, containing only a canvas.
+  // Component state is reflected in the embedded Chart object. We don't
+  // want to destroy and recreate that all the time because it will
+  // flicker.
   name: 'Graph',
   props: {
     topics: Array,
@@ -34,9 +40,16 @@ export default {
   mounted() {
     this.createChart()
   },
-  // updated() {
-  //   this.createChart()
-  // },
+  updated() {
+    // See if we deleted a topic
+    const datasets = this.chart.data.datasets
+    for (let i = datasets.length - 1; i >= 0; i--) {
+      if (!this.topics.includes(datasets[i].topic)) {
+        this.lastUpdateByTopic.set(datasets[i].topic, 0)
+        datasets.splice(i)
+      }
+    }
+  },
   data: () => ({
     chart: null,
     lastUpdateByTopic: new Map(),
@@ -54,6 +67,7 @@ export default {
       this.chart = new Chart(this.$refs.chart, {
         type: 'line',
         data: {
+          // Data will be added in onRefresh
           datasets: []
         },
         options: {
@@ -71,7 +85,7 @@ export default {
           crosshair: {
           },
           animation: false,
-          spanGaps: true,
+          spanGaps: true, // Recommended for performance, but can we drop it?
           scales: {
             x: {
               type: 'realtime',
@@ -90,29 +104,7 @@ export default {
                 ttl: ttl,
                 refresh: 1000 / frameRate,
                 frameRate: frameRate,
-                onRefresh: chart => {
-                  // query your data source and get the array of {x: timestamp, y: value} objects
-                  let updatedTimestamp = 0
-                  this.topics.forEach((topic, index) => {
-                    const lastUpdate = this.lastUpdateByTopic.get(topic) || 0
-                    const data = NTDataReceiver.instance.getDataSince(topic, lastUpdate)
-                    if (data.length > 0) {
-                      this.lastUpdateByTopic.set(topic, data.at(-1).x)
-                    }
-                    var done = false
-                    for (const dataset of chart.data.datasets) {
-                      if (dataset.label === topicDisplayString(topic)) {
-                        dataset.data.push(...data)
-                        done = true
-                        break
-                      }
-                    }
-                    if (!done) {
-                      chart.data.datasets.push(this.datasetForTopic(topic, chart.data.datasets.length, data))
-                      chart.buildOrUpdateControllers()
-                    }
-                  })
-                }
+                onRefresh: this.onRefresh,
               },
             },
             y: {
@@ -179,7 +171,33 @@ export default {
         parsing: false,
         normalized: true,
         borderColor: this.colors(colorIndex || 0),
+        topic: topic,
       }
+    },
+    onRefresh(chart) {
+      // query your data source and get the array of {x: timestamp, y: value} objects
+      let updatedTimestamp = 0
+      const datasets = chart.data.datasets
+
+      this.topics.forEach((topic, index) => {
+        const lastUpdate = this.lastUpdateByTopic.get(topic) || 0
+        const data = NTDataReceiver.instance.getDataSince(topic, lastUpdate)
+        if (data.length > 0) {
+          this.lastUpdateByTopic.set(topic, data.at(-1).x)
+        }
+        var done = false
+        for (const dataset of datasets) {
+          if (dataset.label === topicDisplayString(topic)) {
+            dataset.data.push(...data)
+            done = true
+            break
+          }
+        }
+        if (!done) {
+          datasets.push(this.datasetForTopic(topic, datasets.length, data))
+          chart.buildOrUpdateControllers()
+        }
+      })
     }
   }
 }
