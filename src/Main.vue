@@ -12,5 +12,5 @@ import App from '@/components/App.vue'
 
 const keyName = "SmartDashboard"
 const keyPrefix = "/" + keyName + "/"
-const ntDataReceiver = new NTDataReceiver(keyPrefix)
+const ntDataReceiver = new NTDataReceiver(window.location.hostname, keyPrefix)
 </script>

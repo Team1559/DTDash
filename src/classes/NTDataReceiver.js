@@ -4,7 +4,7 @@ import { NT4_Client } from "@/nt4/nt4.js"
 export class NTDataReceiver {
   static instance
 
-  constructor(keyPrefix) {
+  constructor(hostname, keyPrefix) {
     this.keyPrefix = keyPrefix
     this.topicsByName = new Map()
     this.topicTree = new TopicTree("")
@@ -15,14 +15,13 @@ export class NTDataReceiver {
     this.startTimeStamp = null
 
     this.ntClient = new NT4_Client(
-      "localhost",
-      // "10.15.59.2",
+      hostname,
       this.topicAnnounceHandler.bind(this),
       this.topicUnannounceHandler.bind(this),
       this.valueUpdateHandler.bind(this),
       this.onConnect.bind(this),
       this.onDisconnect.bind(this),
-    );
+    )
     this.ntClient.subscribeTopicNames([keyPrefix])
     NTDataReceiver.instance = this
   }
@@ -81,7 +80,7 @@ export class NTDataReceiver {
     this.topicTreeChangeHandlers.forEach(f => f(this.topicTree))
   }
   getIndexAfterTimestamp(data, ts) {
-    let low = 0;
+    let low = 0
     let high = data.length - 1
 
     while (low <= high) {
