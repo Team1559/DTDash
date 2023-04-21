@@ -1,8 +1,8 @@
 <template>
   <div>
     <canvas
-      height="600px"
-      style="height: 600px;"
+      height="height"
+      width="width"
       ref="chart"
     >
     </canvas>
@@ -36,6 +36,8 @@ export default {
   name: 'Graph',
   props: {
     topics: Array,
+    width: String,
+    height: String,
   },
   mounted() {
     this.createChart()

@@ -7,8 +7,8 @@
 </template>
 
 <script setup>
-import { NTDataReceiver } from './classes/NTDataReceiver.js'
 import App from '@/components/App.vue'
+import { NTDataReceiver } from './classes/NTDataReceiver.js'
 
 const keyName = "SmartDashboard"
 const keyPrefix = "/" + keyName + "/"

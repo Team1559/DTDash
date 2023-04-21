@@ -47,11 +47,16 @@
       </v-navigation-drawer>
 
       <v-main style="min-height: 100dvh; ">
-        <v-card v-if="haveSelection()">
+        <v-card v-if="haveSelection">
           <Editor
-            :topics="Array.from(selectedTopics)"
-            @close-editor="clearSelection"
+            :spec="newPanelSpec"
+            :blockSize="spec.blockSize"
+            @editor-save="saveNewPanel"
+            @editor-close="clearSelection"
           />
+        </v-card>
+        <v-card v-else>
+          <Dashboard :spec="spec" />
         </v-card>
       </v-main>
     </v-layout>
@@ -59,10 +64,12 @@
 </template>
 
 <script setup>
-import { NTDataReceiver } from '../classes/NTDataReceiver.js'
-import VariableList from '@/components/VariableList.vue'
-import Graph from '@/components/Graph.vue'
+import DashboardSpec from '@/classes/DashboardSpec.js'
+import PanelSpec from '@/classes/PanelSpec.js'
+import { NTDataReceiver } from '@/classes/NTDataReceiver.js'
+import Dashboard from '@/components/Dashboard.vue'
 import Editor from '@/components/Editor.vue'
+import VariableList from '@/components/VariableList.vue'
 </script>
 
 <script>
@@ -74,15 +81,23 @@ export default {
     updateQueues: new Map(),
     topicTree: [],
     connected: false,
+    spec: new DashboardSpec(),
+    newPanelSpec: new PanelSpec(),
   }),
   created() {
     const ntReceiver = NTDataReceiver.instance
     ntReceiver.handleTopicTreeChanged(this.onTopicTreeChanged.bind(this))
     ntReceiver.handleConnectionStateChanged(this.onConnectionStateChanged.bind(this))
   },
+  computed: {
+    haveSelection() {
+      return this.selectedTopics.size !== 0
+    },
+  },
   methods: {
     onSelectTopics(topics) {
       this.selectedTopics = topics
+      this.newPanelSpec.topics = Array.from(this.selectedTopics)
     },
     onTopicTreeChanged(tree) {
       this.topicTree = tree.flatten()
@@ -90,12 +105,14 @@ export default {
     onConnectionStateChanged(connected) {
       this.connected = connected
     },
-    haveSelection() {
-      return this.selectedTopics.size !== 0
-    },
     clearSelection() {
       this.selectedTopics.clear()
-    }
+      this.newPanelSpec = new PanelSpec()
+    },
+    saveNewPanel(panel) {
+      this.spec.addPanel(panel)
+      this.clearSelection()
+    },
   },
 }
 </script>
