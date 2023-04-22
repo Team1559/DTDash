@@ -12,5 +12,5 @@ import { NTDataReceiver } from './classes/NTDataReceiver.js'
 
 const keyName = "SmartDashboard"
 const keyPrefix = "/" + keyName + "/"
-const ntDataReceiver = new NTDataReceiver(window.location.hostname, keyPrefix)
+const ntDataReceiver = new NTDataReceiver(window.location.hostname, keyPrefix, 15000)
 </script>

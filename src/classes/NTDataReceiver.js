@@ -4,8 +4,9 @@ import { NT4_Client } from "@/nt4/nt4.js"
 export class NTDataReceiver {
   static instance
 
-  constructor(hostname, keyPrefix) {
+  constructor(hostname, keyPrefix, retention) {
     this.keyPrefix = keyPrefix
+    this.retention = retention
     this.topicsByName = new Map()
     this.topicTree = new TopicTree("")
     this.dataByTopic = new Map()
@@ -13,6 +14,7 @@ export class NTDataReceiver {
     this.topicTreeChangeHandlers = []
     this.connectionStateHandlers = []
     this.startTimeStamp = null
+    this.pruneInterval = 3000
 
     this.ntClient = new NT4_Client(
       hostname,
@@ -24,6 +26,20 @@ export class NTDataReceiver {
     )
     this.ntClient.subscribeTopicNames([keyPrefix])
     NTDataReceiver.instance = this
+
+    setTimeout(this.prune.bind(this), this.pruneInterval)
+  }
+  prune() {
+    const oldestTimestamp = Date.now() - this.retention
+    for (let seriesName of this.dataByTopic.keys()) {
+      const series = this.dataByTopic.get(seriesName)
+      const firstIndex = this.getIndexAfterTimestamp(series, oldestTimestamp)
+      if (firstIndex > 0) {
+        series.splice(0, firstIndex)
+        console.log("Pruned " + seriesName + " at index " + firstIndex + " leaving " + series.length + " entries.")
+      }
+    }
+    setTimeout(this.prune.bind(this), this.pruneInterval)
   }
   topicAnnounceHandler(topic) {
     const name = topic.name

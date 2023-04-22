@@ -25,7 +25,7 @@
             class="value"
             :style="textStyle"
           >
-            <v-html>{{ getValue(topic) }}</v-html>
+            {{ getValue(topic) }}
           </td>
         </tr>
       </table>
