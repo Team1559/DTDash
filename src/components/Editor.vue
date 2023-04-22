@@ -89,16 +89,3 @@ export default {
   },
 }
 </script>
-<style>
-.label {
-  font-family: "monospace";
-  font-size: 12px;
-  color: 'white';
-  padding-right: 20px;
-}
-
-.value {
-  font-family: "monospace";
-  font-size: 24px;
-}
-</style>

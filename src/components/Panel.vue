@@ -1,5 +1,6 @@
 <template>
   <v-card
+    elevation="5"
     :width="width"
     :height="height"
     :style="style"
@@ -24,7 +25,7 @@
             class="value"
             :style="textStyle"
           >
-            {{ getValue(topic) }}
+            <v-html>{{ getValue(topic) }}</v-html>
           </td>
         </tr>
       </table>
@@ -90,9 +91,16 @@ export default {
   methods: {
     getValue(topic) {
       const value = this.currentValues.get(topic)
+      const pad = " "
       if (Number.isFinite(value)) {
-        return value.toPrecision(3)
+        const s = value.toPrecision(3)
+        const parts = s.split('.')
+        if (parts.length > 1) {
+          return parts[0] + '.' + parts[1].padEnd(3, pad)
+        }
+        return s + pad.repeat(4)
       }
+      // something other than a number
       return value
     },
     updateValues() {
@@ -117,12 +125,14 @@ export default {
 .label {
   font-family: "monospace";
   font-size: 12px;
-  color: 'white';
+  color: #eee;
   padding-right: 20px;
+  overflow: clip;
 }
 
 .value {
   font-family: "monospace";
   font-size: 24px;
+  text-align: right;
 }
 </style>
