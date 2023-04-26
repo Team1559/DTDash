@@ -1,44 +1,32 @@
-# default
+# DTDash
+
+A simple dashboard for FIRST Robotics, an alternative to SmartDashboard.
+
+Status: In development
+
 
 ## Project setup
 
-```
-# yarn
-yarn
+You need to install [yarn](https://yarnpkg.com/).
 
-# npm
-npm install
-
-# pnpm
-pnpm install
-```
-
-### Compiles and hot-reloads for development
+### To Compile and hot-reload for development
 
 ```
-# yarn
 yarn dev
-
-# npm
-npm run dev
-
-# pnpm
-pnpm dev
 ```
+Then access at the provided URL.
 
-### Compiles and minifies for production
+To get a data feed, the UI looks attempts to connect to NetworkTables on the same host.
+For development, this will be `localhost`. The simplest way to get a feed on localhost
+is to run a robot in simulation.
+
+Eventually, we plan to host the built assets on the robot and serve them with a simple
+Java http file server. At that point, the UI host will be the robot and it will get
+live data from the robot.
+
+
+### To Compile and minify for production
 
 ```
-# yarn
 yarn build
-
-# npm
-npm run build
-
-# pnpm
-pnpm build
 ```
-
-### Customize configuration
-
-See [Configuration Reference](https://vitejs.dev/config/).
