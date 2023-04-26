@@ -3,7 +3,7 @@ import Size from './Size.js'
 export default class DashboardSpec {
     constructor() {
         this.panels = []
-        this.blockSize = new Size(150, 150)
+        this.blockSize = new Size(150, 40)
     }
     addPanel(panel) {
         this.panels.push(panel)

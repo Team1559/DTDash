@@ -1,20 +1,18 @@
 export default class Size {
-  constructor(w, h) {
+  constructor(w, h, displayName) {
     return {
       w: w,
       h: h,
-      displayName: w + "x" + h,
+      displayName: displayName || (w + "x" + h),
       dimensions: [w, h]
     }
   }
   static AllSizes() {
-    let sizes = []
-    for (let w = 1; w <= 4; w *= 2) {
-      for (let h = 1; h <= 4; h *= 2) {
-        sizes.push(new Size(w, h))
-      }
-    }
-    return sizes
+    return [
+      new Size(2, 2, "tiny"),
+      new Size(3, 2, "small"),
+      new Size(4, 3, "medium"),
+      new Size(5, 4, "large"),
+    ]
   }
-  static blockSize = 150;
 }

@@ -7,9 +7,11 @@ export default class PanelSpec {
     constructor(topics) {
         this.topics = topics || []
         this.visType = VisType.Text
-        this.size = new Size(2, 2)
-        this.position = null
         this.colors = ['red']
+        this.x = 0
+        this.y = 0
+        this.w = 3
+        this.h = 6
         this.id = PanelSpec.nextId
         PanelSpec.nextId++
     }

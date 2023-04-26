@@ -70,6 +70,7 @@ import { NTDataReceiver } from '@/classes/NTDataReceiver.js'
 import Dashboard from '@/components/Dashboard.vue'
 import Editor from '@/components/Editor.vue'
 import VariableList from '@/components/VariableList.vue'
+import VisType from '@/classes/VisType'
 </script>
 
 <script>
@@ -110,6 +111,9 @@ export default {
       this.newPanelSpec = new PanelSpec()
     },
     saveNewPanel(panel) {
+      if (this.newPanelSpec.visType === VisType.Text) {
+        this.newPanelSpec.h = this.newPanelSpec.topics.length
+      }
       this.spec.addPanel(panel)
       this.clearSelection()
     },

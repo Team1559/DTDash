@@ -1,7 +1,6 @@
 <template>
   <div>
     <canvas
-      height="height"
       width="width"
       ref="chart"
     >
@@ -43,6 +42,11 @@ export default {
     this.createChart()
   },
   updated() {
+    // See if the chart size changed (in the Editor)
+    const canvas = this.$refs.chart
+    if (canvas.width !== this.width || canvas.height !== this.height) {
+      this.createChart()
+    }
     // See if we deleted a topic
     const datasets = this.chart.data.datasets
     for (let i = datasets.length - 1; i >= 0; i--) {

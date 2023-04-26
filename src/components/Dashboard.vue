@@ -1,21 +1,28 @@
 <template>
-  <Panel
-    v-for="panelSpec in this.panelSpecs"
-    :key="panelSpec.id"
-    :spec="panelSpec"
-    :blockSize="blockSize"
-  >
-  </Panel>
+  <draggable v-model="panelSpecs">
+    <template v-slot:item="{ item }">
+      <Panel
+        :key="item.id"
+        :spec="item"
+        :blockSize="spec.blockSize"
+      />
+    </template>
+  </draggable>
 </template>
 
 <script setup>
 import DashboardSpec from '@/classes/DashboardSpec.js'
+import Size from '@/classes/Size'
 import Panel from '@/components/Panel.vue'
+import Draggable from "vue3-draggable"
 </script>
 
 <script>
 export default {
   name: 'Dashboard',
+  components: {
+    Draggable,
+  },
   props: {
     spec: DashboardSpec,
   },
@@ -31,6 +38,15 @@ export default {
     }
   },
   methods: {
+    resize() {
+      console.log("resize: ", arguments)
+    },
+    move() {
+      console.log("move: ", arguments)
+    },
+    moved() {
+      console.log("moved: ", arguments)
+    },
   },
 }
 </script>

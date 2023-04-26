@@ -66,13 +66,13 @@ export default {
       return "color: " + this.spec.colors[0] + "; "
     },
     width() {
-      return this.size.w * this.blockSize.w + "px"
+      return this.spec.w * this.blockSize.w + "px"
     },
     height() {
-      return this.size.h * this.blockSize.h + "px"
+      return this.spec.h * this.blockSize.h + "px"
     },
     sizeStyle() {
-      return ""
+      return "border: 1px solid green "
       // ("width: " + this.width + "; " +
       //   "height: " + this.height + "; " +
       //   "max-width: " + this.width + "; " +
@@ -84,15 +84,13 @@ export default {
     topics() {
       return this.spec.topics
     },
-    size() {
-      return this.spec.size
-    },
   },
   methods: {
     getValue(topic) {
       const value = this.currentValues.get(topic)
       const pad = " "
       if (Number.isFinite(value)) {
+        return value.toPrecision(3)
         const s = value.toPrecision(3)
         const parts = s.split('.')
         if (parts.length > 1) {

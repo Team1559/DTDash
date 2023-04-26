@@ -36,7 +36,7 @@ export class NTDataReceiver {
       const firstIndex = this.getIndexAfterTimestamp(series, oldestTimestamp)
       if (firstIndex > 0) {
         series.splice(0, firstIndex)
-        console.log("Pruned " + seriesName + " at index " + firstIndex + " leaving " + series.length + " entries.")
+        // console.log("Pruned " + seriesName + " at index " + firstIndex + " leaving " + series.length + " entries.")
       }
     }
     setTimeout(this.prune.bind(this), this.pruneInterval)

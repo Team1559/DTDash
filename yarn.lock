@@ -604,6 +604,7 @@ __metadata:
     vite: ^3.1.9
     vite-plugin-vuetify: ^1.0.0-alpha.12
     vue: ^3.2.38
+    vue3-draggable: ^2.0.9
     vuetify: ^3.0.0
     webfontloader: ^1.0.0
   languageName: unknown
@@ -1922,6 +1923,15 @@ __metadata:
   bin:
     vite: bin/vite.js
   checksum: ad35b7008c2b62a167d1d1a82f0a0c60fa457733f1969e9eedf0b0077f67a7ac74b4c9477e75a397895150f09b6551f0c17841c5b05c34d9fe302bb0b5dc28a8
+  languageName: node
+  linkType: hard
+
+"vue3-draggable@npm:^2.0.9":
+  version: 2.0.9
+  resolution: "vue3-draggable@npm:2.0.9"
+  peerDependencies:
+    vue: ^3.0.0
+  checksum: e7bd6e967ae7f2ef9d5ca4940c594e7b5b0a9eeb92e5db6511667639f8264b44898fe63593204e10b83ad6ebebdb4cfd5dd01fb5e9d5ee72e55371f0546f2425
   languageName: node
   linkType: hard
 

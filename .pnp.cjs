@@ -45,6 +45,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["vite", "virtual:1d49bdc5852fadc8755d84749c08a435e6df0198f0090e9c1a5650797b65317e1153288364151107411a7af617e347b05c9c16044a297e0ae0bd3fabee08f69d#npm:3.2.5"],\
             ["vite-plugin-vuetify", "virtual:1d49bdc5852fadc8755d84749c08a435e6df0198f0090e9c1a5650797b65317e1153288364151107411a7af617e347b05c9c16044a297e0ae0bd3fabee08f69d#npm:1.0.2"],\
             ["vue", "npm:3.2.47"],\
+            ["vue3-draggable", "virtual:1d49bdc5852fadc8755d84749c08a435e6df0198f0090e9c1a5650797b65317e1153288364151107411a7af617e347b05c9c16044a297e0ae0bd3fabee08f69d#npm:2.0.9"],\
             ["vuetify", "virtual:1d49bdc5852fadc8755d84749c08a435e6df0198f0090e9c1a5650797b65317e1153288364151107411a7af617e347b05c9c16044a297e0ae0bd3fabee08f69d#npm:3.1.11"],\
             ["webfontloader", "npm:1.6.28"]\
           ],\
@@ -818,6 +819,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["vite", "virtual:1d49bdc5852fadc8755d84749c08a435e6df0198f0090e9c1a5650797b65317e1153288364151107411a7af617e347b05c9c16044a297e0ae0bd3fabee08f69d#npm:3.2.5"],\
             ["vite-plugin-vuetify", "virtual:1d49bdc5852fadc8755d84749c08a435e6df0198f0090e9c1a5650797b65317e1153288364151107411a7af617e347b05c9c16044a297e0ae0bd3fabee08f69d#npm:1.0.2"],\
             ["vue", "npm:3.2.47"],\
+            ["vue3-draggable", "virtual:1d49bdc5852fadc8755d84749c08a435e6df0198f0090e9c1a5650797b65317e1153288364151107411a7af617e347b05c9c16044a297e0ae0bd3fabee08f69d#npm:2.0.9"],\
             ["vuetify", "virtual:1d49bdc5852fadc8755d84749c08a435e6df0198f0090e9c1a5650797b65317e1153288364151107411a7af617e347b05c9c16044a297e0ae0bd3fabee08f69d#npm:3.1.11"],\
             ["webfontloader", "npm:1.6.28"]\
           ],\
@@ -2288,6 +2290,28 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@vue/runtime-dom", "npm:3.2.47"],\
             ["@vue/server-renderer", "virtual:487db916e160a571ff50687ed972004ec0078aa76b7fedf7bdabfd607dfed3ba7b2d1f51e99387f885501b4dbb11471c0ce20d647adb7ae38656bbc259642ae8#npm:3.2.47"],\
             ["@vue/shared", "npm:3.2.47"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["vue3-draggable", [\
+        ["npm:2.0.9", {\
+          "packageLocation": "./.yarn/cache/vue3-draggable-npm-2.0.9-d92aa8e793-e7bd6e967a.zip/node_modules/vue3-draggable/",\
+          "packageDependencies": [\
+            ["vue3-draggable", "npm:2.0.9"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:1d49bdc5852fadc8755d84749c08a435e6df0198f0090e9c1a5650797b65317e1153288364151107411a7af617e347b05c9c16044a297e0ae0bd3fabee08f69d#npm:2.0.9", {\
+          "packageLocation": "./.yarn/__virtual__/vue3-draggable-virtual-b43d632e80/0/cache/vue3-draggable-npm-2.0.9-d92aa8e793-e7bd6e967a.zip/node_modules/vue3-draggable/",\
+          "packageDependencies": [\
+            ["vue3-draggable", "virtual:1d49bdc5852fadc8755d84749c08a435e6df0198f0090e9c1a5650797b65317e1153288364151107411a7af617e347b05c9c16044a297e0ae0bd3fabee08f69d#npm:2.0.9"],\
+            ["@types/vue", null],\
+            ["vue", "npm:3.2.47"]\
+          ],\
+          "packagePeers": [\
+            "@types/vue",\
+            "vue"\
           ],\
           "linkType": "HARD"\
         }]\

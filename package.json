@@ -21,6 +21,7 @@
     "roboto-fontface": "*",
     "sass": "^1.60.0",
     "vue": "^3.2.38",
+    "vue3-draggable": "^2.0.9",
     "vuetify": "^3.0.0",
     "webfontloader": "^1.0.0"
   },

@@ -12,6 +12,7 @@ import ChartStreaming from 'chartjs-plugin-streaming'
 import zoomPlugin from 'chartjs-plugin-zoom'
 import vuetify from './vuetify'
 import { loadFonts } from './webfontloader'
+
 // import { Interaction } from 'chart.js'
 // import { CrosshairPlugin, Interpolate } from 'chartjs-plugin-crosshair'
 
