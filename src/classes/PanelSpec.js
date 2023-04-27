@@ -12,6 +12,7 @@ export default class PanelSpec {
         this.y = 0
         this.w = 3
         this.h = 6
+        this.column = 0
         this.id = PanelSpec.nextId
         PanelSpec.nextId++
     }

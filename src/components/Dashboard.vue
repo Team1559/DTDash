@@ -1,13 +1,27 @@
 <template>
-  <draggable v-model="panelSpecs">
-    <template v-slot:item="{ item }">
-      <Panel
-        :key="item.id"
-        :spec="item"
-        :blockSize="spec.blockSize"
-      />
-    </template>
-  </draggable>
+  <v-row
+    no-gutters
+    justify="stretch"
+  >
+    <v-col
+      v-for="(_, index) in spec.columns"
+      cols="3"
+      class="column"
+    >
+      <draggable
+        v-model="spec.columns[index]"
+        class="fill-height"
+      >
+        <template v-slot:item="{ item }">
+          <Panel
+            :key="item.id"
+            :spec="item"
+            :blockSize="spec.blockSize"
+          />
+        </template>
+      </draggable>
+    </v-col>
+  </v-row>
 </template>
 
 <script setup>
@@ -50,3 +64,8 @@ export default {
   },
 }
 </script>
+<style>
+.column {
+  border-right: 1px solid gray;
+}
+</style>

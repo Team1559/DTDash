@@ -1,17 +1,23 @@
 import Size from './Size.js'
 
 export default class DashboardSpec {
-    constructor() {
-        this.panels = []
+    constructor(nCols) {
+        this.columns = []
+        for (var i = 0; i < nCols; i++) {
+            this.columns.push([])
+        }
         this.blockSize = new Size(150, 40)
     }
-    addPanel(panel) {
-        this.panels.push(panel)
+    addPanel(panel, col) {
+        this.columns[col].push(panel)
     }
     removePanel(panel) {
-        const index = this.panels.indexOf(panel)
-        if (index !== -1) {
-            this.panels.splice(index)
+        for (var column of this.columns) {
+            const index = column.indexOf(panel)
+            if (index !== -1) {
+                column.splice(index)
+                return
+            }
         }
     }
 }

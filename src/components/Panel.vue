@@ -1,9 +1,7 @@
 <template>
   <v-card
-    elevation="5"
-    :width="width"
-    :height="height"
     :style="style"
+    class="panel"
   >
     <Graph
       v-if="isGraph"
@@ -12,7 +10,10 @@
       :topics="topics"
     >
     </Graph>
-    <div v-if="isText">
+    <div
+      v-if="isText"
+      class="text"
+    >
       <table density="compact">
         <tr
           v-for="topic in this.topics"
@@ -71,15 +72,8 @@ export default {
     height() {
       return this.spec.h * this.blockSize.h + "px"
     },
-    sizeStyle() {
-      return "border: 1px solid green "
-      // ("width: " + this.width + "; " +
-      //   "height: " + this.height + "; " +
-      //   "max-width: " + this.width + "; " +
-      //   "max-height: " + this.height + "; ")
-    },
     style() {
-      return this.textStyle + this.sizeStyle
+      return this.textStyle
     },
     topics() {
       return this.spec.topics
@@ -120,6 +114,14 @@ export default {
 }
 </script>
 <style>
+.panel {
+  border: 1px solid gray;
+}
+
+.text {
+  margin: 10px;
+}
+
 .label {
   font-family: "monospace";
   font-size: 12px;
@@ -132,5 +134,4 @@ export default {
   font-family: "monospace";
   font-size: 24px;
   text-align: right;
-}
-</style>
+}</style>

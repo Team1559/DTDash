@@ -51,6 +51,7 @@
           <Editor
             :spec="newPanelSpec"
             :blockSize="spec.blockSize"
+            :columns="spec.columns.length"
             @editor-save="saveNewPanel"
             @editor-close="clearSelection"
           />
@@ -71,6 +72,7 @@ import Dashboard from '@/components/Dashboard.vue'
 import Editor from '@/components/Editor.vue'
 import VariableList from '@/components/VariableList.vue'
 import VisType from '@/classes/VisType'
+
 </script>
 
 <script>
@@ -82,7 +84,7 @@ export default {
     updateQueues: new Map(),
     topicTree: [],
     connected: false,
-    spec: new DashboardSpec(),
+    spec: new DashboardSpec(4),
     newPanelSpec: new PanelSpec(),
   }),
   created() {
@@ -114,7 +116,7 @@ export default {
       if (this.newPanelSpec.visType === VisType.Text) {
         this.newPanelSpec.h = this.newPanelSpec.topics.length
       }
-      this.spec.addPanel(panel)
+      this.spec.addPanel(panel, panel.column)
       this.clearSelection()
     },
   },

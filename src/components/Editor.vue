@@ -10,12 +10,9 @@
       />
       <v-select
         dense
-        label="Size"
-        :items="Size.AllSizes()"
-        v-model="currentSpec.size"
-        item-title="displayName"
-        item-value="dimensions"
-        return-object
+        label="Column"
+        :items="columnNumbers"
+        v-model="currentSpec.column"
         style="max-width: 150px"
       >
       </v-select>
@@ -52,6 +49,7 @@ export default {
   props: {
     spec: Object,
     blockSize: Object,
+    columns: Number,
   },
   emits: ['editor-save', 'editor-close'],
   data() {
@@ -71,6 +69,13 @@ export default {
     },
     topics() {
       return this.currentSpec.topics
+    },
+    columnNumbers() {
+      var nums = []
+      for (var i = 0; i < this.columns; i++) {
+        nums.push(i)
+      }
+      return nums
     },
   },
   methods: {
