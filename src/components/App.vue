@@ -100,7 +100,7 @@ export default {
   methods: {
     onSelectTopics(topics) {
       this.selectedTopics = topics
-      this.newPanelSpec.topics = Array.from(this.selectedTopics)
+      this.newPanelSpec.setTopics(Array.from(this.selectedTopics))
     },
     onTopicTreeChanged(tree) {
       this.topicTree = tree.flatten()

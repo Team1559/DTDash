@@ -1,8 +1,11 @@
 <template>
   <v-card
-    :style="style"
     class="panel"
+    variant="outlined"
   >
+    <p class="label text">
+      {{ spec.title }}
+    </p>
     <Graph
       v-if="isGraph"
       :width="width"
@@ -16,11 +19,11 @@
     >
       <table density="compact">
         <tr
-          v-for="topic in this.topics"
+          v-for="(topic, index) in this.topics"
           :key="topic"
         >
           <td class="label">
-            {{ topicDisplayString(topic) }}
+            {{ getLabel(index) }}
           </td>
           <td
             class="value"
@@ -35,7 +38,6 @@
 </template>
 
 <script setup>
-import { topicDisplayString } from '@/classes/Format.js'
 import { NTDataReceiver } from '@/classes/NTDataReceiver.js'
 import PanelSpec from '@/classes/PanelSpec.js'
 import VisType from '@/classes/VisType.js'
@@ -80,6 +82,9 @@ export default {
     },
   },
   methods: {
+    getLabel(index) {
+      return this.spec.labels[index]
+    },
     getValue(topic) {
       const value = this.currentValues.get(topic)
       const pad = " "
@@ -115,7 +120,7 @@ export default {
 </script>
 <style>
 .panel {
-  border: 1px solid gray;
+  padding: 8px;
 }
 
 .text {
@@ -134,4 +139,5 @@ export default {
   font-family: "monospace";
   font-size: 24px;
   text-align: right;
-}</style>
+}
+</style>

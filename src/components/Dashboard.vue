@@ -6,7 +6,6 @@
     <v-col
       v-for="(_, index) in spec.columns"
       cols="3"
-      class="column"
     >
       <draggable
         v-model="spec.columns[index]"
@@ -64,8 +63,3 @@ export default {
   },
 }
 </script>
-<style>
-.column {
-  border-right: 1px solid gray;
-}
-</style>

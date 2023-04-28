@@ -13,7 +13,9 @@ import { Chart } from 'chart.js'
 import { scaleOrdinal } from 'd3-scale'
 import { schemeCategory10 } from 'd3-scale-chromatic'
 import { NTDataReceiver } from '../classes/NTDataReceiver.js'
-import { topicDisplayString } from '../classes/Format.js'
+import { topicDisplayString, commonPrefix, trimPrefix } from '@/classes/Format.js'
+
+Chart.defaults.color = '#eee'
 </script>
 
 <script>
@@ -171,8 +173,11 @@ export default {
       })
     },
     datasetForTopic(topic, colorIndex, data) {
+      let prefix = commonPrefix(this.topics.map(topicDisplayString))
+
       return {
-        label: topicDisplayString(topic),
+        topic: topic,
+        label: trimPrefix(topicDisplayString(topic), prefix + "/"),
         data: data || [],
         parsing: false,
         normalized: true,
@@ -193,7 +198,7 @@ export default {
         }
         var done = false
         for (const dataset of datasets) {
-          if (dataset.label === topicDisplayString(topic)) {
+          if (dataset.topic === topic) {
             dataset.data.push(...data)
             done = true
             break
