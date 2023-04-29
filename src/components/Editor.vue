@@ -71,8 +71,8 @@ export default {
       return this.currentSpec.topics
     },
     columnNumbers() {
-      var nums = []
-      for (var i = 0; i < this.columns; i++) {
+      let nums = []
+      for (let i = 0; i < this.columns; i++) {
         nums.push(i)
       }
       return nums

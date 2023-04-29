@@ -25,7 +25,6 @@
 
 <script setup>
 import DashboardSpec from '@/classes/DashboardSpec.js'
-import Size from '@/classes/Size'
 import Panel from '@/components/Panel.vue'
 import Draggable from "vue3-draggable"
 </script>

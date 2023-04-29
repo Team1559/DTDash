@@ -65,7 +65,7 @@ export class NTDataReceiver {
     if (!this.topicsByName.get(name)) {
       this.addTopic(topic)
     }
-    var queue = this.dataByTopic.get(name)
+    let queue = this.dataByTopic.get(name)
     // store data in object format so chart.js doesn't have to parse
     queue.push({ x: this.startTimeStamp + timestamp_us / 1000.0, y: value })
   }

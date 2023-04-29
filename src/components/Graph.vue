@@ -196,7 +196,7 @@ export default {
         if (data.length > 0) {
           this.lastUpdateByTopic.set(topic, data.at(-1).x)
         }
-        var done = false
+        let done = false
         for (const dataset of datasets) {
           if (dataset.topic === topic) {
             dataset.data.push(...data)

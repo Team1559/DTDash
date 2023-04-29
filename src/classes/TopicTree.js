@@ -43,7 +43,7 @@ export class TopicTree {
         }
         const first = path[0]
         const childIndex = this.findChildByName(path[0])
-        var child
+        let child
         if (childIndex === -1) {
             child = new TopicTree(first)
             this.addChild(child)
@@ -55,7 +55,7 @@ export class TopicTree {
     }
     findChildByName(name) {
         if (this.children) {
-            for (var i = 0; i < this.children.length; i++) {
+            for (let i = 0; i < this.children.length; i++) {
                 if (this.children[i].name === name) {
                     return i
                 }
@@ -79,7 +79,7 @@ export class TopicTree {
             }
             if (path.length === 1) {
                 // A child of this node is to be removed
-                this.children.splice(index, 1);
+                this.children.splice(index, 1)
                 return
             }
             else {
