@@ -1,10 +1,8 @@
 <template>
-  <v-row
-    no-gutters
-    justify="stretch"
-  >
+  <v-row no-gutters>
     <v-col
       v-for="(_, index) in spec.columns"
+      :key="spec.name + '-' + index"
       cols="3"
     >
       <draggable
@@ -24,7 +22,7 @@
 </template>
 
 <script setup>
-import DashboardSpec from '@/classes/DashboardSpec.js'
+import { DashboardSpec } from '@/classes/DashboardSpec.js'
 import Panel from '@/components/Panel.vue'
 import Draggable from "vue3-draggable"
 </script>

@@ -41,12 +41,14 @@ export default {
     height: String,
   },
   mounted() {
+    this.destroyChart()
     this.createChart()
   },
   updated() {
     // See if the chart size changed (in the Editor)
     const canvas = this.$refs.chart
     if (canvas.width !== this.width || canvas.height !== this.height) {
+      this.destroyChart()
       this.createChart()
     }
     // See if we deleted a topic
@@ -58,6 +60,9 @@ export default {
       }
     }
   },
+  beforeUnmount() {
+    this.destroyChart()
+  },
   data: () => ({
     chart: null,
     lastUpdateByTopic: new Map(),
@@ -66,12 +71,14 @@ export default {
   computed: {
   },
   methods: {
-    createChart() {
+    destroyChart() {
       if (this.chart !== null) {
         this.chart.destroy()
         this.chart = null
-        this.lastUpdateByTopic = new Map()
       }
+      this.lastUpdateByTopic = new Map()
+    },
+    createChart() {
       this.chart = new Chart(this.$refs.chart, {
         type: 'line',
         data: {
@@ -171,6 +178,7 @@ export default {
           },
         }
       })
+      this.chart.buildOrUpdateControllers()
     },
     datasetForTopic(topic, colorIndex, data) {
       let prefix = commonPrefix(this.topics.map(topicDisplayString))
@@ -193,6 +201,9 @@ export default {
       this.topics.forEach((topic, index) => {
         const lastUpdate = this.lastUpdateByTopic.get(topic) || 0
         const data = NTDataReceiver.instance.getDataSince(topic, lastUpdate)
+        if (data.length > 10) {
+          console.log("graph data for", topic, ": ", data.length, "entries since", lastUpdate)
+        }
         if (data.length > 0) {
           this.lastUpdateByTopic.set(topic, data.at(-1).x)
         }

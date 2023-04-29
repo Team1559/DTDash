@@ -1,23 +1,18 @@
-import Size from './Size.js'
+export class DashboardSource {
+    static Editor = 'Layout Editor'
+    static Robot = 'Robot'
+    static Uploaded = 'Uploaded'
+    static SavedInBrowser = 'Saved in Browser'
+}
 
-export default class DashboardSpec {
+export class DashboardSpec {
     constructor(nCols) {
         this.columns = []
+        this.name = "Layout Editor"
+        this.source = DashboardSource.Editor
+
         for (let i = 0; i < nCols; i++) {
             this.columns.push([])
-        }
-        this.blockSize = new Size(150, 40)
-    }
-    addPanel(panel, col) {
-        this.columns[col].push(panel)
-    }
-    removePanel(panel) {
-        for (let column of this.columns) {
-            const index = column.indexOf(panel)
-            if (index !== -1) {
-                column.splice(index)
-                return
-            }
         }
     }
 }

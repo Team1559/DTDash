@@ -8,8 +8,6 @@
     </p>
     <Graph
       v-if="isGraph"
-      :width="width"
-      :height="height"
       :topics="topics"
     >
     </Graph>
@@ -67,15 +65,6 @@ export default {
     },
     textStyle() {
       return "color: " + this.spec.colors[0] + "; "
-    },
-    width() {
-      return this.spec.w * this.blockSize.w + "px"
-    },
-    height() {
-      return this.spec.h * this.blockSize.h + "px"
-    },
-    style() {
-      return this.textStyle
     },
     topics() {
       return this.spec.topics

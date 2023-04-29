@@ -5,6 +5,7 @@
         <v-app-bar-nav-icon
           icon="mdi-plus-circle"
           color="blue"
+          size="large"
           @click.stop="showNav = !showNav"
         ></v-app-bar-nav-icon>
         <v-icon
@@ -18,18 +19,75 @@
           color="red"
         />
         <v-app-bar-title>DT Dashboard</v-app-bar-title>
-      </v-app-bar>
+        <v-spacer />
 
-      <v-banner
-        v-if="!connected"
-        color="red"
-        icon="mdi-wifi-off"
-        lines="one"
-      >
-        <v-banner-text>
-          Robot disconnected
-        </v-banner-text>
-      </v-banner>
+        <v-app-bar-nav-icon
+          icon="mdi-download"
+          color="blue"
+          size="large"
+          @click="downloadDashboardSpec"
+        >
+        </v-app-bar-nav-icon>
+
+        <v-app-bar-nav-icon
+          icon="mdi-upload"
+          color="blue"
+          size="large"
+          @click="uploadDashboardSpec"
+        >
+        </v-app-bar-nav-icon>
+        <v-dialog
+          v-model="dialog"
+          width="auto"
+        >
+          <template v-slot:activator="{ props }">
+            <v-app-bar-nav-icon
+              icon="mdi-content-save"
+              color="blue"
+              v-bind="props"
+            >
+            </v-app-bar-nav-icon>
+          </template>
+          <v-card>
+            <v-card-title>
+              <span class="text-h5">Save Layout</span>
+            </v-card-title>
+            <v-card-text>
+              Enter a name to save the dashboard layout.
+            </v-card-text>
+            <v-text-field
+              label="Name"
+              hint="Unique name for the layout"
+              color="blue"
+              v-model="spec.name"
+              required
+              @keydown.enter="dialog = false; saveDashboardSpec()"
+            ></v-text-field>
+            <v-card-actions>
+              <v-spacer />
+              <v-btn
+                color="blue"
+                @click="dialog = false"
+              >Cancel</v-btn>
+              <v-btn
+                color="blue"
+                @click="dialog = false; saveDashboardSpec()"
+              >Save</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+
+        <v-select
+          dense
+          label="Layout"
+          :items="layouts"
+          item-title="name"
+          v-model="spec"
+          style="max-width: 250px; padding-top: 20px"
+          return-object
+        >
+        </v-select>
+      </v-app-bar>
 
       <v-navigation-drawer
         floating
@@ -65,7 +123,7 @@
 </template>
 
 <script setup>
-import DashboardSpec from '@/classes/DashboardSpec.js'
+import { DashboardSpec } from '@/classes/DashboardSpec.js'
 import PanelSpec from '@/classes/PanelSpec.js'
 import { NTDataReceiver } from '@/classes/NTDataReceiver.js'
 import Dashboard from '@/components/Dashboard.vue'
@@ -78,15 +136,20 @@ import VisType from '@/classes/VisType'
 <script>
 export default {
   name: 'App',
-  data: () => ({
-    showNav: false,
-    selectedTopics: new Set(),
-    updateQueues: new Map(),
-    topicTree: [],
-    connected: false,
-    spec: new DashboardSpec(4),
-    newPanelSpec: new PanelSpec(),
-  }),
+  data: function () {
+    const spec = new DashboardSpec(4)
+    return {
+      showNav: false,
+      selectedTopics: new Set(),
+      updateQueues: new Map(),
+      topicTree: [],
+      connected: false,
+      spec: spec,
+      newPanelSpec: new PanelSpec(),
+      layouts: this.loadLayouts() || [spec],
+      dialog: false,
+    }
+  },
   created() {
     const ntReceiver = NTDataReceiver.instance
     ntReceiver.handleTopicTreeChanged(this.onTopicTreeChanged.bind(this))
@@ -98,6 +161,13 @@ export default {
     },
   },
   methods: {
+    loadLayouts() {
+      let savedLayouts = localStorage.layouts
+      if (!savedLayouts) {
+        return null
+      }
+      return JSON.parse(savedLayouts)
+    },
     onSelectTopics(topics) {
       this.selectedTopics = topics
       this.newPanelSpec.setTopics(Array.from(this.selectedTopics))
@@ -116,8 +186,33 @@ export default {
       if (this.newPanelSpec.visType === VisType.Text) {
         this.newPanelSpec.h = this.newPanelSpec.topics.length
       }
-      this.spec.addPanel(panel, panel.column)
+      this.spec.columns[panel.column].push(panel)
       this.clearSelection()
+    },
+    removePanel(panel) {
+      for (let column of this.spec.columns) {
+        const index = column.indexOf(panel)
+        if (index !== -1) {
+          column.splice(index)
+          return
+        }
+      }
+    },
+    downloadDashboardSpec() {
+      const data = btoa(JSON.stringify(this.spec))
+      let link = document.createElement("a")
+      link.download = this.spec.name + ".json"
+      link.href = "data:text/plain;base64," + data
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+    },
+    uploadDashboardSpec() {
+
+    },
+    saveDashboardSpec() {
+      this.layouts.splice(0, 0, new DashboardSpec(4))
+      localStorage.layouts = JSON.stringify(this.layouts)
     },
   },
 }
