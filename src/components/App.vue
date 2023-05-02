@@ -29,15 +29,46 @@
         >
         </v-app-bar-nav-icon>
 
-        <v-app-bar-nav-icon
-          icon="mdi-upload"
-          color="blue"
-          size="large"
-          @click="uploadDashboardSpec"
-        >
-        </v-app-bar-nav-icon>
         <v-dialog
-          v-model="dialog"
+          v-model="uploadDialog"
+          width="auto"
+        >
+          <template v-slot:activator="{ props }">
+            <v-app-bar-nav-icon
+              icon="mdi-upload"
+              color="blue"
+              size="large"
+              v-bind="props"
+            >
+            </v-app-bar-nav-icon>
+          </template>
+          <v-card>
+            <v-card-title>
+              <span class="text-h5">Load Layout</span>
+            </v-card-title>
+            <v-card-text>
+              Select a previously downloaded dashboard layout file.
+            </v-card-text>
+            <v-file-input
+              v-model="uploadFiles"
+              label="Select layout file"
+            ></v-file-input>
+            <v-card-actions>
+              <v-spacer />
+              <v-btn
+                color="blue"
+                @click="uploadDialog = false"
+              >Cancel</v-btn>
+              <v-btn
+                color="blue"
+                @click="uploadDialog = false; uploadDashboardSpec()"
+              >Load</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+
+        <v-dialog
+          v-model="saveDialog"
           width="auto"
         >
           <template v-slot:activator="{ props }">
@@ -61,17 +92,16 @@
               color="blue"
               v-model="spec.name"
               required
-              @keydown.enter="dialog = false; saveDashboardSpec()"
             ></v-text-field>
             <v-card-actions>
               <v-spacer />
               <v-btn
                 color="blue"
-                @click="dialog = false"
+                @click="saveDialog = false"
               >Cancel</v-btn>
               <v-btn
                 color="blue"
-                @click="dialog = false; saveDashboardSpec()"
+                @click="saveDialog = false; saveDashboardSpec()"
               >Save</v-btn>
             </v-card-actions>
           </v-card>
@@ -147,7 +177,9 @@ export default {
       spec: spec,
       newPanelSpec: new PanelSpec(),
       layouts: this.loadLayouts() || [spec],
-      dialog: false,
+      saveDialog: false,
+      uploadDialog: false,
+      uploadFiles: null,
     }
   },
   created() {
@@ -208,11 +240,21 @@ export default {
       document.body.removeChild(link)
     },
     uploadDashboardSpec() {
-
+      let file = this.uploadFiles[0]
+      let reader = new FileReader()
+      reader.readAsText(file)
+      reader.onload = (function () {
+        let layout = JSON.parse(reader.result)
+        this.layouts.push(layout)
+        this.spec = layout
+      }).bind(this)
+      reader.onerror = function () {
+        alert(reader.error)
+      }
     },
     saveDashboardSpec() {
-      this.layouts.splice(0, 0, new DashboardSpec(4))
       localStorage.layouts = JSON.stringify(this.layouts)
+      this.layouts.splice(0, 0, new DashboardSpec(4))
     },
   },
 }
