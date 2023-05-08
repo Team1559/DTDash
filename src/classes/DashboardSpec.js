@@ -2,7 +2,7 @@ export class DashboardSource {
     static Editor = 'Layout Editor'
     static Robot = 'Robot'
     static Uploaded = 'Uploaded'
-    static SavedInBrowser = 'Saved in Browser'
+    static BrowserStorage = 'Browser Storage'
 }
 
 export class DashboardSpec {

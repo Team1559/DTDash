@@ -25,7 +25,7 @@
           icon="mdi-download"
           color="blue"
           size="large"
-          @click="downloadDashboardSpec"
+          @click="downloadLayout"
         >
         </v-app-bar-nav-icon>
 
@@ -61,7 +61,8 @@
               >Cancel</v-btn>
               <v-btn
                 color="blue"
-                @click="uploadDialog = false; uploadDashboardSpec()"
+                @click="uploadDialog = false; uploadLayout()"
+                :disabled="!uploadFiles"
               >Load</v-btn>
             </v-card-actions>
           </v-card>
@@ -90,7 +91,7 @@
               label="Name"
               hint="Unique name for the layout"
               color="blue"
-              v-model="spec.name"
+              v-model="saveName"
               required
             ></v-text-field>
             <v-card-actions>
@@ -101,11 +102,20 @@
               >Cancel</v-btn>
               <v-btn
                 color="blue"
-                @click="saveDialog = false; saveDashboardSpec()"
+                @click="saveDialog = false; saveLayout()"
+                :disabled="!saveName"
               >Save</v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
+
+        <v-app-bar-nav-icon
+          icon="mdi-delete"
+          color="blue"
+          size="large"
+          @click="deleteCurrentLayout"
+        >
+        </v-app-bar-nav-icon>
 
         <v-select
           dense
@@ -153,7 +163,7 @@
 </template>
 
 <script setup>
-import { DashboardSpec } from '@/classes/DashboardSpec.js'
+import { DashboardSpec, DashboardSource } from '@/classes/DashboardSpec.js'
 import PanelSpec from '@/classes/PanelSpec.js'
 import { NTDataReceiver } from '@/classes/NTDataReceiver.js'
 import Dashboard from '@/components/Dashboard.vue'
@@ -178,6 +188,7 @@ export default {
       newPanelSpec: new PanelSpec(),
       layouts: this.loadLayouts() || [spec],
       saveDialog: false,
+      saveName: "",
       uploadDialog: false,
       uploadFiles: null,
     }
@@ -193,13 +204,6 @@ export default {
     },
   },
   methods: {
-    loadLayouts() {
-      let savedLayouts = localStorage.layouts
-      if (!savedLayouts) {
-        return null
-      }
-      return JSON.parse(savedLayouts)
-    },
     onSelectTopics(topics) {
       this.selectedTopics = topics
       this.newPanelSpec.setTopics(Array.from(this.selectedTopics))
@@ -230,7 +234,32 @@ export default {
         }
       }
     },
-    downloadDashboardSpec() {
+    loadLayouts() {
+      let savedLayouts = localStorage.layouts
+      if (!savedLayouts) {
+        return null
+      }
+      const layouts = JSON.parse(savedLayouts)
+      for (var i = 0; i < layouts.length; i++) {
+        layouts[i].source = DashboardSource.BrowserStorage
+      }
+    },
+    saveLayout() {
+      this.spec.name = this.saveName
+      this.saveName = ""
+      if (this.spec.source === DashboardSource.Editor) {
+        this.spec.source = DashboardSource.BrowserStorage
+        this.saveToLocalStorage()
+        this.layouts.splice(0, 0, new DashboardSpec(4))
+      }
+      else {
+        this.saveToLocalStorage()
+      }
+    },
+    saveToLocalStorage() {
+      localStorage.layouts = JSON.stringify(this.layouts)
+    },
+    downloadLayout() {
       const data = btoa(JSON.stringify(this.spec))
       let link = document.createElement("a")
       link.download = this.spec.name + ".json"
@@ -239,12 +268,13 @@ export default {
       link.click()
       document.body.removeChild(link)
     },
-    uploadDashboardSpec() {
+    uploadLayout() {
       let file = this.uploadFiles[0]
       let reader = new FileReader()
       reader.readAsText(file)
       reader.onload = (function () {
         let layout = JSON.parse(reader.result)
+        layout.source = DashboardSource.Uploaded
         this.layouts.push(layout)
         this.spec = layout
       }).bind(this)
@@ -252,9 +282,15 @@ export default {
         alert(reader.error)
       }
     },
-    saveDashboardSpec() {
-      localStorage.layouts = JSON.stringify(this.layouts)
-      this.layouts.splice(0, 0, new DashboardSpec(4))
+    deleteCurrentLayout() {
+      const index = this.layouts.indexOf(this.spec)
+      if (index !== -1) {
+        this.layouts.splice(index, 1)
+      }
+      if (this.spec.source === DashboardSource.Editor) {
+        this.layouts.splice(0, 0, new DashboardSpec(4))
+      }
+      this.spec = this.layouts.at(0)
     },
   },
 }
