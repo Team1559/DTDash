@@ -156,7 +156,6 @@ export default {
                 mode: 'x',
               },
               zoom: {
-                enabled: false,
                 mode: 'x',
                 scaleMode: 'xy',
                 pinch: {
@@ -190,7 +189,6 @@ export default {
         parsing: false,
         normalized: true,
         borderColor: this.colors(colorIndex || 0),
-        topic: topic,
       }
     },
     onRefresh(chart) {

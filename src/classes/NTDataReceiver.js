@@ -1,6 +1,24 @@
 import { TopicTree } from '@/classes/TopicTree.js'
 import { NT4_Client } from "@/nt4/nt4.js"
 
+export function getIndexAfterTimestamp(data, ts) {
+  let low = 0
+  let high = data.length - 1
+
+  while (low <= high) {
+    const mid = Math.floor((low + high) / 2)
+    const midTime = data[mid].x
+
+    if (midTime < ts)
+      low = mid + 1
+    else if (midTime > ts)
+      high = mid - 1
+    else
+      return mid + 1 // element after the one we want
+  }
+  return low
+}
+
 export class NTDataReceiver {
   static instance
 
@@ -33,7 +51,7 @@ export class NTDataReceiver {
     const oldestTimestamp = Date.now() - this.retention
     for (let seriesName of this.dataByTopic.keys()) {
       const series = this.dataByTopic.get(seriesName)
-      const firstIndex = this.getIndexAfterTimestamp(series, oldestTimestamp)
+      const firstIndex = getIndexAfterTimestamp(series, oldestTimestamp)
       if (firstIndex > 0) {
         series.splice(0, firstIndex)
         // console.log("Pruned " + seriesName + " at index " + firstIndex + " leaving " + series.length + " entries.")
@@ -95,29 +113,12 @@ export class NTDataReceiver {
     this.topicTree.sort()
     this.topicTreeChangeHandlers.forEach(f => f(this.topicTree))
   }
-  getIndexAfterTimestamp(data, ts) {
-    let low = 0
-    let high = data.length - 1
-
-    while (low <= high) {
-      const mid = Math.floor((low + high) / 2)
-      const midTime = data[mid].x
-
-      if (midTime < ts)
-        low = mid + 1
-      else if (midTime > ts)
-        high = mid - 1
-      else
-        return mid + 1 // element after the one we want
-    }
-    return low
-  }
   getDataForTopic(name) {
     return this.dataByTopic.get(name)
   }
   getDataSince(name, since) {
     const data = this.dataByTopic.get(name)
-    const startIndex = this.getIndexAfterTimestamp(data, since)
+    const startIndex = getIndexAfterTimestamp(data, since)
     if (startIndex >= data.length) {
       return []
     }

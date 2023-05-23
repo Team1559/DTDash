@@ -243,6 +243,8 @@ export default {
       for (var i = 0; i < layouts.length; i++) {
         layouts[i].source = DashboardSource.BrowserStorage
       }
+      layouts.splice(0, 0, new DashboardSpec(4))
+      return layouts
     },
     saveLayout() {
       this.spec.name = this.saveName
@@ -257,7 +259,10 @@ export default {
       }
     },
     saveToLocalStorage() {
-      localStorage.layouts = JSON.stringify(this.layouts)
+      const layoutsToSave = this.layouts.filter(function (layout) {
+        return layout.name !== DashboardSpec.DefaultName
+      })
+      localStorage.layouts = JSON.stringify(layoutsToSave)
     },
     downloadLayout() {
       const data = btoa(JSON.stringify(this.spec))
@@ -277,6 +282,7 @@ export default {
         layout.source = DashboardSource.Uploaded
         this.layouts.push(layout)
         this.spec = layout
+        this.saveToLocalStorage()
       }).bind(this)
       reader.onerror = function () {
         alert(reader.error)
@@ -287,7 +293,7 @@ export default {
       if (index !== -1) {
         this.layouts.splice(index, 1)
       }
-      if (this.spec.source === DashboardSource.Editor) {
+      if (this.spec.source === DashboardSource.Editor || this.layouts.length === 0) {
         this.layouts.splice(0, 0, new DashboardSpec(4))
       }
       this.spec = this.layouts.at(0)

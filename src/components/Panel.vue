@@ -9,8 +9,11 @@
     <Graph
       v-if="isGraph"
       :topics="topics"
-    >
-    </Graph>
+    />
+    <Scatter
+      v-if="isScatter"
+      :topics="topics"
+    />
     <div
       v-if="isText"
       class="text"
@@ -40,6 +43,7 @@ import { NTDataReceiver } from '@/classes/NTDataReceiver.js'
 import PanelSpec from '@/classes/PanelSpec.js'
 import VisType from '@/classes/VisType.js'
 import Graph from '@/components/Graph.vue'
+import Scatter from '@/components/Scatter.vue'
 </script>
 
 <script>
@@ -59,6 +63,9 @@ export default {
   computed: {
     isGraph() {
       return this.spec.visType === VisType.Graph
+    },
+    isScatter() {
+      return this.spec.visType === VisType.Scatterplot
     },
     isText() {
       return this.spec.visType === VisType.Text

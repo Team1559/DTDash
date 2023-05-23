@@ -6,9 +6,10 @@ export class DashboardSource {
 }
 
 export class DashboardSpec {
+    static DefaultName = "Layout Editor"
     constructor(nCols) {
         this.columns = []
-        this.name = "Layout Editor"
+        this.name = DashboardSpec.DefaultName
         this.source = DashboardSource.Editor
 
         for (let i = 0; i < nCols; i++) {

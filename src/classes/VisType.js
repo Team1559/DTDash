@@ -4,5 +4,5 @@ export default class VisType {
     static Scatterplot = 'scatterplot'
     static BarGauge = 'bar gauge'
     static ArcGauge = 'arc gauge'
-    static All = [VisType.Text, VisType.Graph, VisType.BarGauge, VisType.ArcGauge]
+    static All = [VisType.Text, VisType.Graph, VisType.Scatterplot, VisType.BarGauge, VisType.ArcGauge]
 }
