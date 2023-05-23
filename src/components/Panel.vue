@@ -40,7 +40,6 @@
 
 <script setup>
 import { NTDataReceiver } from '@/classes/NTDataReceiver.js'
-import PanelSpec from '@/classes/PanelSpec.js'
 import VisType from '@/classes/VisType.js'
 import Graph from '@/components/Graph.vue'
 import Scatter from '@/components/Scatter.vue'
@@ -50,7 +49,7 @@ import Scatter from '@/components/Scatter.vue'
 export default {
   name: 'Panel',
   props: {
-    spec: PanelSpec,
+    spec: Object,
     blockSize: Object,
   },
   emits: ['panel-close'],

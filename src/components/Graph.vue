@@ -215,8 +215,8 @@ export default {
         }
         if (!done) {
           datasets.push(this.datasetForTopic(topic, datasets.length, data))
-          chart.buildOrUpdateControllers()
         }
+        chart.buildOrUpdateControllers()
       })
     }
   }

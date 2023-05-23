@@ -81,6 +81,11 @@ export default {
           colors: {
             enabled: false,
           },
+          elements: {
+            point: {
+              radius: 1,
+            },
+          },
           animation: false,
           scales: {
             x: {
