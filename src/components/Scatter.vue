@@ -32,10 +32,11 @@ export default {
     width: String,
     height: String,
   },
+  created() {
+  },
   mounted() {
     this.destroyChart()
     this.createChart()
-    setInterval(this.onRefresh, 200)
   },
   updated() {
     this.destroyChart()
@@ -44,15 +45,22 @@ export default {
   beforeUnmount() {
     this.destroyChart()
   },
-  data: () => ({
-    chart: null,
-    lastUpdateByTopic: new Map(),
-    colors: scaleOrdinal(schemeCategory10),
-  }),
+  data() {
+    this.chart = null
+    this.intervalTimer = null
+    return {
+      lastUpdateByTopic: new Map(),
+      colors: scaleOrdinal(schemeCategory10),
+    }
+  },
   computed: {
   },
   methods: {
     destroyChart() {
+      if (this.intervalTimer) {
+        clearInterval(this.intervalTimer)
+        this.intervalTimer = null
+      }
       if (this.chart !== null) {
         this.chart.destroy()
         this.chart = null
@@ -130,13 +138,14 @@ export default {
         }
       })
       this.chart.buildOrUpdateControllers()
+      this.intervalTimer = setInterval(this.onRefresh, 500)
     },
     prune() {
       if (!this.chart) {
         return
       }
       const data = this.chart.data.datasets[0].data
-      const limit = 1800
+      const limit = 600
 
       if (data.length > limit) {
         const overage = data.length - limit
@@ -145,8 +154,6 @@ export default {
       }
     },
     onRefresh() {
-      this.prune()
-
       if (!this.chart) {
         return
       }
@@ -196,7 +203,9 @@ export default {
       console.log("added", added, "data points to scatterplot, total", data.length)
       this.lastUpdateByTopic.set(xTopic, xData.at(-1).x)
       this.lastUpdateByTopic.set(yTopic, yData.at(-1).x)
+      this.prune()
       this.chart.update()
+      console.log("updated chart")
     }
   }
 }
